@@ -1,7 +1,9 @@
 #!/bin/bash
 
-apt-get update
-apt-get --assume-yes install jq
+if [ ! -f /usr/bin/jq ]; then
+    apt-get update
+    apt-get --assume-yes install jq
+fi
 
 mkdir /etc/biomine-scripts
 
