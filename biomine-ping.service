@@ -1,0 +1,5 @@
+[Unit]
+Description=Biomine Control Center
+
+[Service]
+ExecStart=/etc/biomine-scripts/ping.sh
