@@ -14,3 +14,5 @@ wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/biomine-ping.t
 systemctl start biomine-ping.timer
 systemctl enable biomine-ping.timer
 systemctl start biomine-ping.service
+
+systemctl daemon-reload
