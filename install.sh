@@ -1,5 +1,8 @@
 #!/bin/bash
 
+apt-get update
+apt-get --assume-yes install jq
+
 mkdir /etc/biomine-scripts
 
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/ping.sh -O /etc/biomine-scripts/ping.sh

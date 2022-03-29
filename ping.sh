@@ -10,7 +10,7 @@ macaddr="eth0: "$ethernet" / wlan0: "$wifi
 FIRST=1
 JSON=
 
-FILES="statuses/*"
+FILES="/var/dashboard/statuses/*"
 for f in $FILES;
 do
     name=$(echo $f | sed 's/statuses\///' | sed 's/\_//' | sed 's/\-//')
