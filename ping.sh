@@ -13,7 +13,7 @@ JSON=
 FILES="/var/dashboard/statuses/*"
 for f in $FILES;
 do
-    name=$(echo $f | sed 's/statuses\///' | sed 's/\_//' | sed 's/\-//')
+    name=$(echo $f | sed 's/\/var\/dashboard\/statuses\///' | sed 's/\_//' | sed 's/\-//')
     val=$(cat $f|tr '"' "'")
 
     if [ $FIRST -eq 1 ]; then
