@@ -7,15 +7,12 @@ wlanmac=$(ip address show wlan0 | grep "link/" | egrep -o "ether [^.]+:[^.]+:[^.
 lanip=$(ip address show eth0 | grep "inet " | egrep -o "inet [^.]+.[^.]+.[^.]+.[^/]+" | sed -e "s/inet //")
 wlanip=$(ip address show wlan0 | grep "inet " | egrep -o "inet [^.]+.[^.]+.[^.]+.[^/]+" | sed -e "s/inet //")
 
-macaddr="eth0: "$lanmac" / wlan0: "$wlanmac
-
 diskusage=$(df -h /|grep -v File|awk '{print $5}'|tr -d '%')
 
 JSON="{\"lanmacaddr\":\"${lanmac}\""
 JSON=$JSON",\"wlanmacaddr\":\"${wlanmac}\""
 JSON=$JSON",\"lanip\":\"${lanip}\""
 JSON=$JSON",\"wlanip\":\"${wlanip}\""
-JSON=$JSON",\"macaddr\":\"${macaddr}\""
 JSON=$JSON",\"diskusage\":\"${diskusage}\""
 
 FILES="/var/dashboard/statuses/*"
@@ -31,7 +28,7 @@ do
         val=$(cat $f|tr '"' "'"|awk '{print $1;}')
         ;;
 
-    recentactivity | peerlist)
+    recentactivity | peerlist | localip)
         continue
         ;;
 
