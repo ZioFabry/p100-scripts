@@ -2,13 +2,21 @@
 
 APIURL=https://cc.biomine.it/api
 
-ethernet=$(ip address show eth0 | grep "link/" | egrep -o "ether [^.]+:[^.]+:[^.]+:[^.]+:[^.]+:[^.]+brd" | sed -e "s/ether //"|sed "s/ brd//")
-wifi=$(ip address show wlan0 | grep "link/" | egrep -o "ether [^.]+:[^.]+:[^.]+:[^.]+:[^.]+:[^.]+brd" | sed -e "s/ether //"|sed "s/ brd//")
+lanmac=$(ip address show eth0 | grep "link/" | egrep -o "ether [^.]+:[^.]+:[^.]+:[^.]+:[^.]+:[^.]+brd" | sed -e "s/ether //"|sed "s/ brd//")
+wlanmac=$(ip address show wlan0 | grep "link/" | egrep -o "ether [^.]+:[^.]+:[^.]+:[^.]+:[^.]+:[^.]+brd" | sed -e "s/ether //"|sed "s/ brd//")
+lanip=$(ip address show eth0 | grep "inet " | egrep -o "inet [^.]+.[^.]+.[^.]+.[^/]+" | sed -e "s/inet //")
+wlanip=$(ip address show wlan0 | grep "inet " | egrep -o "inet [^.]+.[^.]+.[^.]+.[^/]+" | sed -e "s/inet //")
 
-macaddr="eth0: "$ethernet" / wlan0: "$wifi
+macaddr="eth0: "$lanmac" / wlan0: "$wlanmac
 
-FIRST=1
-JSON=
+diskusage=$(df -h /|grep -v File|awk '{print $5}'|tr -d '%')
+
+JSON="{\"lanmacaddr\":\"${lanmac}\""
+JSON=$JSON",\"wlanmacaddr\":\"${wlanmac}\""
+JSON=$JSON",\"lanip\":\"${lanip}\""
+JSON=$JSON",\"wlanip\":\"${wlanip}\""
+JSON=$JSON",\"macaddr\":\"${macaddr}\""
+JSON=$JSON",\"diskusage\":\"${diskusage}\""
 
 FILES="/var/dashboard/statuses/*"
 for f in $FILES;
@@ -16,15 +24,10 @@ do
     name=$(echo $f | sed 's/\/var\/dashboard\/statuses\///' | sed 's/\_//' | sed 's/\-//')
     val=$(cat $f|tr '"' "'")
 
-    if [ $FIRST -eq 1 ]; then
-        FIRST=0
-        JSON="{\"${name}\":\"${val}\""
-    else
-        JSON="${JSON},\"${name}\":\"${val}\""
-    fi
+    JSON=${JSON}",\"${name}\":\"${val}\""
 done
     
-JSON="${JSON},\"macaddr\":\"${macaddr}\"}"
+JSON=${JSON}"}"
 
 TFILE=$(tempfile -s .json)
 echo $JSON >$TFILE

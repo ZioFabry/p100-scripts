@@ -2,8 +2,8 @@
 Description=Check Biomine Control Center every 300s
 
 [Timer]
-OnBootSec=300
-OnUnitActiveSec=300
+OnBootSec=60
+OnUnitActiveSec=60
 AccuracySec=1ms
 
 [Install]
