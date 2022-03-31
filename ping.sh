@@ -8,11 +8,13 @@ lanip=$(ip address show eth0 | grep "inet " | egrep -o "inet [^.]+.[^.]+.[^.]+.[
 wlanip=$(ip address show wlan0 | grep "inet " | egrep -o "inet [^.]+.[^.]+.[^.]+.[^/]+" | sed -e "s/inet //")
 
 diskusage=$(df -h /|grep -v File|awk '{print $5}'|tr -d '%')
+externalip=$(curl -4 icanhazip.com)
 
 JSON="{\"lanmacaddr\":\"${lanmac}\""
 JSON=$JSON",\"wlanmacaddr\":\"${wlanmac}\""
 JSON=$JSON",\"lanip\":\"${lanip}\""
 JSON=$JSON",\"wlanip\":\"${wlanip}\""
+JSON=$JSON",\"externalip\":\"${externalip}\""
 JSON=$JSON",\"diskusage\":\"${diskusage}\""
 
 FILES="/var/dashboard/statuses/*"
@@ -28,7 +30,7 @@ do
         val=$(cat $f|tr '"' "'"|awk '{print $1;}')
         ;;
 
-    recentactivity | peerlist | localip)
+    recentactivity | peerlist | localip | externalip)
         continue
         ;;
 
