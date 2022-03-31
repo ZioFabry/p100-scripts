@@ -22,11 +22,27 @@ FILES="/var/dashboard/statuses/*"
 for f in $FILES;
 do
     name=$(echo $f | sed 's/\/var\/dashboard\/statuses\///' | sed 's/\_//' | sed 's/\-//')
-    val=$(cat $f|tr '"' "'")
+
+    case "$name" in
+    animalname)
+        val=$(cat $f|tr ' ' "-")
+        ;;
+    lat | lng)
+        val=$(cat $f|tr '"' "'"|awk '{print $1;}')
+        ;;
+
+    recentactivity | peerlist)
+        continue
+        ;;
+
+    *)
+        val=$(cat $f|tr '"' "'")
+        ;;
+    esac
 
     JSON=${JSON}",\"${name}\":\"${val}\""
 done
-    
+
 JSON=${JSON}"}"
 
 TFILE=$(tempfile -s .json)
@@ -40,7 +56,7 @@ case "$CMD" in
     bash)
         ARG=$(echo $RESULT|jq .arg|tr -d '"')
         ID=$(echo $RESULT|jq .id|tr -d '"')
-        
+
         TFILE=$(tempfile -s .output)
         echo $ARG | sudo bash 1>$TFILE 2>&1
         TFILE2=$(tempfile -s .json)
@@ -51,7 +67,7 @@ case "$CMD" in
         rm -f $TFILE
         rm -f $TFILE2
         ;;
-        
+
     nope)
         ;;
 
