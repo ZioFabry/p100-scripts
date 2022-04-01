@@ -9,6 +9,7 @@ wlanip=$(ip address show wlan0 | grep "inet " | egrep -o "inet [^.]+.[^.]+.[^.]+
 
 diskusage=$(df -h /|grep -v File|awk '{print $5}'|tr -d '%')
 externalip=$(curl -4 icanhazip.com)
+uptime=$(uptime)
 
 JSON="{\"lanmacaddr\":\"${lanmac}\""
 JSON=$JSON",\"wlanmacaddr\":\"${wlanmac}\""
@@ -16,6 +17,7 @@ JSON=$JSON",\"lanip\":\"${lanip}\""
 JSON=$JSON",\"wlanip\":\"${wlanip}\""
 JSON=$JSON",\"externalip\":\"${externalip}\""
 JSON=$JSON",\"diskusage\":\"${diskusage}\""
+JSON=$JSON",\"uptime\":\"${uptime}\""
 
 FILES="/var/dashboard/statuses/*"
 for f in $FILES;
@@ -26,7 +28,7 @@ do
     animalname)
         val=$(cat $f|tr ' ' "-")
         ;;
-    lat | lng)
+    lat | lng | infoheight)
         val=$(cat $f|tr '"' "'"|awk '{print $1;}')
         ;;
 
