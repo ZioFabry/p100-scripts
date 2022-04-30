@@ -2,6 +2,10 @@
 
 APIURL=https://cc.biomine.it/api
 
+if [ -f /opt/panther-x2/data/SN ]; then
+    cp /opt/panther-x2/data/SN /var/dashboard/statuses/sn
+fi
+
 hostname=$(hostname)
 lanmac=$(ip address show eth0 | grep "link/" | egrep -o "ether [^.]+:[^.]+:[^.]+:[^.]+:[^.]+:[^.]+brd" | sed -e "s/ether //"|sed "s/ brd//")
 wlanmac=$(ip address show wlan0 | grep "link/" | egrep -o "ether [^.]+:[^.]+:[^.]+:[^.]+:[^.]+:[^.]+brd" | sed -e "s/ether //"|sed "s/ brd//")
