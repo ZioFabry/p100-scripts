@@ -2,6 +2,7 @@
 
 APIURL=https://cc.biomine.it/api
 
+hostname=$(hostname)
 lanmac=$(ip address show eth0 | grep "link/" | egrep -o "ether [^.]+:[^.]+:[^.]+:[^.]+:[^.]+:[^.]+brd" | sed -e "s/ether //"|sed "s/ brd//")
 wlanmac=$(ip address show wlan0 | grep "link/" | egrep -o "ether [^.]+:[^.]+:[^.]+:[^.]+:[^.]+:[^.]+brd" | sed -e "s/ether //"|sed "s/ brd//")
 lanip=$(ip address show eth0 | grep "inet " | egrep -o "inet [^.]+.[^.]+.[^.]+.[^/]+" | sed -e "s/inet //")
@@ -18,6 +19,7 @@ JSON=$JSON",\"wlanip\":\"${wlanip}\""
 JSON=$JSON",\"externalip\":\"${externalip}\""
 JSON=$JSON",\"diskusage\":\"${diskusage}\""
 JSON=$JSON",\"uptime\":\"${uptime}\""
+JSON=$JSON",\"hostname\":\"${hostname}\""
 
 FILES="/var/dashboard/statuses/*"
 for f in $FILES;
