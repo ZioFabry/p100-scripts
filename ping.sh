@@ -4,6 +4,16 @@ APIURL=https://cc.biomine.it/api
 
 if [ -f /opt/panther-x2/data/SN ]; then
     cp /opt/panther-x2/data/SN /var/dashboard/statuses/sn
+
+    if [ ! -f /var/dashboard/statuses/lat ]; then
+        /etc/biomine-scripts/helium-statuses.sh
+    fi
+
+    AGE=$(date -d "now - $( stat -c "%Y" /var/dashboard/statuses/lat ) seconds" +%s)
+
+    if [ $AGE -gt 3600 ]; then
+        /etc/biomine-scripts/helium-statuses.sh
+    fi
 fi
 
 hostname=$(hostname)
