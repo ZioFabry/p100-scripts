@@ -29,3 +29,7 @@ Based on Briffy's Dashboard https://github.com/briffy/PiscesQoLDashboard
 ## Daily Check of root filesystem
 
     wget https://raw.githubusercontent.com/moophlo/pisces-miner-scripts/main/crontab_job.sh -O - | sudo bash
+
+## remoteit Install
+
+    sudo wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/remoteit.sh -O - | sudo bash
