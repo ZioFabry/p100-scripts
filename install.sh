@@ -10,6 +10,9 @@ mkdir /etc/biomine-scripts
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/ping.sh -O /etc/biomine-scripts/ping.sh
 chmod 755 /etc/biomine-scripts/ping.sh
 
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/killStucked.sh -O /etc/biomine-scripts/killStucked.sh
+chmod 755 /etc/biomine-scripts/killStucked.sh
+
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/helium-statuses.sh -O /etc/biomine-scripts/helium-statuses.sh
 chmod 755 /etc/biomine-scripts/helium-statuses.sh
 
