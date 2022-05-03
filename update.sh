@@ -1,12 +1,14 @@
 #!/bin/bash
 
 # force update of the Briffy's dashboard
-echo 'running' > /var/dashboard/services/dashboard-update
-wget https://raw.githubusercontent.com/briffy/PiscesQoLDashboard/main/update.sh -O - | sudo bash
+echo 'start' > /var/dashboard/services/dashboard-update
+/etc/monitor-scripts/dashboard-update.sh
 
-# customized version of miner-version-check.sh
-wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
-chmod 755 /etc/monitor-scripts/miner-version-check.sh
+if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
+    # customized version of miner-version-check.sh
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
+    chmod 755 /etc/monitor-scripts/miner-version-check.sh
+fi
 
 # tune dashboard timers setting
 sed -i 's/OnBootSec=5/OnBootSec=10/g' /etc/systemd/system/bt-check.timer || true
