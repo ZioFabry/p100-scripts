@@ -3,6 +3,9 @@
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/helium-statuses.sh -O /etc/biomine-scripts/helium-statuses.sh
 chmod 755 /etc/biomine-scripts/helium-statuses.sh
 
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/info-height.sh -O /etc/monitor-scripts/info-height.sh
+chmod 755 /etc/biomine-scripts/helium-statuses.sh
+
 echo "Tuning timers..."
 
 # tune dashboard timers setting
