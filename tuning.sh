@@ -1,10 +1,36 @@
 #!/bin/bash
 
+#AGE=$(($(date +%s) - $(date +%s -r /etc/monitor-scripts/dashboard-update.sh)))
+#
+#if [[ $AGE -gt 86400 ]]; then
+#    echo "Updating dashboard..."
+#    # force update of the Briffy's dashboard
+#    echo 'start' > /var/dashboard/services/dashboard-update
+#    /etc/monitor-scripts/dashboard-update.sh
+#fi
+
+echo "Tuning scripts..."
+
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/killStucked.sh -O /etc/biomine-scripts/killStucked.sh
+chmod 755 /etc/biomine-scripts/killStucked.sh
+
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/helium-statuses.sh -O /etc/biomine-scripts/helium-statuses.sh
 chmod 755 /etc/biomine-scripts/helium-statuses.sh
 
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/info-height.sh -O /etc/monitor-scripts/info-height.sh
-chmod 755 /etc/biomine-scripts/helium-statuses.sh
+chmod 755 /etc/monitor-scripts/info-height.sh
+
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
+chmod 755 /etc/monitor-scripts/auto-maintain.sh
+
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-update.sh -O /etc/monitor-scripts/auto-update.sh
+chmod 755 /etc/monitor-scripts/auto-update.sh
+
+if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
+    # customized version of miner-version-check.sh
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
+    chmod 755 /etc/monitor-scripts/miner-version-check.sh
+fi
 
 echo "Tuning timers..."
 
@@ -22,4 +48,3 @@ sed -i 's/OnUnitActiveSec=120/OnUnitActiveSec=180/g' /etc/systemd/system/helium-
 sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disabled/g' /etc/monitor-scripts/helium-statuses.sh
 
 systemctl daemon-reload
-
