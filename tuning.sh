@@ -52,5 +52,4 @@ sed -i 's/OnUnitActiveSec=120/OnUnitActiveSec=180/g' /etc/systemd/system/helium-
 sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disabled/g' /etc/monitor-scripts/helium-statuses.sh
 
 systemctl daemon-reload
-
-bash /etc/biomine-scripts/killStucked.sh
+#bash /etc/biomine-scripts/killStucked.sh
