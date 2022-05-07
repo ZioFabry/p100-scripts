@@ -1,0 +1,7 @@
+alias l='ls -alh'
+alias p='ps -efH'
+alias height='sudo docker exec miner miner info height'
+alias docker='sudo docker'
+alias systemctl='sudo systemctl'
+alias kill='sudo kill'
+alias _log='tail -f /home/pi/hnt/miner/log/console.log'
