@@ -11,10 +11,12 @@
 
 echo "Tuning scripts..."
 
-[ ! -d ~/.ssh ] && mkdir ~/.ssh
-[ ! -f ~/.ssh/authorized_keys ] && wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/authorized_keys -O ~/.ssh/authorized_keys
+[ ! -d /home/admin/.ssh ] && mkdir /home/admin/.ssh
+[ ! -f /home/admin/.ssh/authorized_keys ] && wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/authorized_keys -O /home/admin/.ssh/authorized_keys
 
-wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/.bash_aliases -O ~/.bash_aliases
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/.bash_aliases -O /home/admin/.bash_aliases
+
+chown -R admin:sudo /home/admin/*
 
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/killStucked.sh -O /etc/biomine-scripts/killStucked.sh
 chmod 755 /etc/biomine-scripts/killStucked.sh
