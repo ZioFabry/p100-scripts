@@ -11,6 +11,8 @@
 
 echo "Tuning scripts..."
 
+[ -f /root/.bash_aliases ] && rm /root/.bash_aliases
+
 [ ! -d /home/admin/.ssh ] && mkdir /home/admin/.ssh
 [ ! -f /home/admin/.ssh/authorized_keys ] && wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/authorized_keys -O /home/admin/.ssh/authorized_keys
 
