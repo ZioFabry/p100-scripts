@@ -57,6 +57,7 @@ if [[ $service == 'enabled' ]]; then
     if [ ! -f /var/dashboard/statuses/maybeResyncNextMaintain ]; then
         echo "[$(date)] difference of $blockheight_difference found, maybe a fast sync to next cycle..." >> /var/dashboard/logs/auto-maintain.log
         touch /var/dashboard/statuses/maybeResyncNextMaintain
+        bash /etc/biomine-scripts/killStucked.sh
     else
         rm /var/dashboard/statuses/maybeResyncNextMaintain
         echo "[$(date)] Big difference in blockheight, doing a fast sync..." >> /var/dashboard/logs/auto-maintain.log
