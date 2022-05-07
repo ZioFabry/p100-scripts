@@ -19,6 +19,6 @@ echo "Tuning..."
 
 curl -s https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/tuning.sh | sudo bash
 
-echo "running killStucked script..."
-/etc/biomine-scripts/killStucked.sh
+#echo "running killStucked script..."
+#/etc/biomine-scripts/killStucked.sh
 
