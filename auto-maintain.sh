@@ -4,6 +4,7 @@ ua='user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH
 xrw='x-requested-with: XMLHttpRequest'
 
 if [[ $service == 'enabled' ]]; then
+  name=$(sudo docker ps -a -f name=miner --format "{{ .Names }}")
   bash /etc/monitor-scripts/update-check.sh &> /dev/null
   bash /etc/monitor-scripts/miner-version-check.sh &> /dev/null
   bash /etc/monitor-scripts/helium-statuses.sh &> /dev/null
@@ -22,7 +23,7 @@ if [[ $service == 'enabled' ]]; then
 
   if [[ ! $current_docker_status =~ 'Up' ]]; then
     echo "[$(date)] Problems with docker, trying to start..." >> /var/dashboard/logs/auto-maintain.log
-    docker start miner
+    docker start $name
     sleep 1m
     current_docker_status=$(sudo docker ps -a -f name=miner --format "{{ .Status }}")
     uptime=$(sudo docker ps -a -f name=miner --format "{{ .Status }}" | grep -Po "Up [0-9]* seconds" | sed 's/ seconds//' | sed 's/Up //')
@@ -62,17 +63,17 @@ if [[ $service == 'enabled' ]]; then
         rm /var/dashboard/statuses/maybeResyncNextMaintain
         echo "[$(date)] Big difference in blockheight, doing a fast sync..." >> /var/dashboard/logs/auto-maintain.log
         wget https://helium-snapshots.nebra.com/snap-$snap_height -O /home/pi/hnt/miner/snap/snap-latest
-        docker exec miner miner repair sync_pause
-        docker exec miner miner repair sync_cancel
-        docker exec miner miner snapshot load /var/data/snap/snap-latest
+        docker exec $name miner repair sync_pause
+        docker exec $name miner repair sync_cancel
+        docker exec $name miner snapshot load /var/data/snap/snap-latest
         sleep 2m
-        sync_state=$(docker exec miner miner repair sync_state)
+        sync_state=$(docker exec $name miner repair sync_state)
 
         if [[ $sync_state != 'sync active' ]]; then
-          docker exec miner miner repair sync_resume
+          docker exec $name miner repair sync_resume
         else
           sleep 2m
-          docker exec miner miner repair sync_resume
+          docker exec $name miner repair sync_resume
         fi
     fi
   fi
