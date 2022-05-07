@@ -5,9 +5,9 @@ xrw='x-requested-with: XMLHttpRequest'
 
 if [[ $service == 'enabled' ]]; then
   name=$(sudo docker ps -a -f name=miner --format "{{ .Names }}")
-  bash /etc/monitor-scripts/update-check.sh &> /dev/null
-  bash /etc/monitor-scripts/miner-version-check.sh &> /dev/null
-  bash /etc/monitor-scripts/helium-statuses.sh &> /dev/null
+  bash /etc/monitor-scripts/update-check.sh
+  bash /etc/monitor-scripts/miner-version-check.sh
+  bash /etc/monitor-scripts/helium-statuses.sh
   current_docker_status=$(sudo docker ps -a -f name=miner --format "{{ .Status }}")
   current_info_height=$(cat /var/dashboard/statuses/infoheight)
   live_height=$(cat /var/dashboard/statuses/current_blockheight)
@@ -29,7 +29,7 @@ if [[ $service == 'enabled' ]]; then
     uptime=$(sudo docker ps -a -f name=miner --format "{{ .Status }}" | grep -Po "Up [0-9]* seconds" | sed 's/ seconds//' | sed 's/Up //')
 
     if [[ ! $current_docker_status =~ 'Up' ]] || [[ $uptime != '' && $uptime -le 55 ]]; then
-      echo "[$(date)] Still problems with docker, trying a miner update..." >> /var/dashboard/logs/auto-maintain.log
+      echo "[$(date)] Still problems with docker ($current_docker_status,$uptime), trying a miner update..." >> /var/dashboard/logs/auto-maintain.log
       echo 'start' > /var/dashboard/services/miner-update
       bash /etc/monitor-scripts/miner-update.sh
       sleep 1m
@@ -38,7 +38,7 @@ if [[ $service == 'enabled' ]]; then
       uptime=$(sudo docker ps -a -f name=miner --format "{{ .Status }}" | grep -Po "Up [0-9]* seconds" | sed 's/ seconds//' | sed 's/Up //')
 
       if [[ ! $current_docker_status =~ 'Up' || $uptime != '' && $uptime -le 55 ]]; then
-        echo "[$(date)] STILL problems with docker, trying a blockchain clear..." >> /var/dashboard/logs/auto-maintain.log
+        echo "[$(date)] STILL problems with docker ($current_docker_status,$uptime), trying a blockchain clear..." >> /var/dashboard/logs/auto-maintain.log
         echo 'start' > /var/dashboard/services/clear-blockchain
         bash /etc/monitor-scripts/clear-blockchain.sh
         sleep 1m
@@ -58,10 +58,10 @@ if [[ $service == 'enabled' ]]; then
     if [ ! -f /var/dashboard/statuses/maybeResyncNextMaintain ]; then
         echo "[$(date)] difference of $blockheight_difference found, maybe a fast sync to next cycle..." >> /var/dashboard/logs/auto-maintain.log
         touch /var/dashboard/statuses/maybeResyncNextMaintain
-        bash /etc/biomine-scripts/killStucked.sh
+        #bash /etc/biomine-scripts/killStucked.sh
     else
         rm /var/dashboard/statuses/maybeResyncNextMaintain
-        echo "[$(date)] Big difference in blockheight, doing a fast sync..." >> /var/dashboard/logs/auto-maintain.log
+        echo "[$(date)] Big difference in blockheight of $blockheight_difference found 2nd times, doing a fast sync..." >> /var/dashboard/logs/auto-maintain.log
         wget https://helium-snapshots.nebra.com/snap-$snap_height -O /home/pi/hnt/miner/snap/snap-latest
         docker exec $name miner repair sync_pause
         docker exec $name miner repair sync_cancel
