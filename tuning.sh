@@ -26,6 +26,9 @@ chmod 755 /etc/biomine-scripts/killStucked.sh
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/helium-statuses.sh -O /etc/monitor-scripts/helium-statuses.sh
 chmod 755 /etc/monitor-scripts/helium-statuses.sh
 
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/peer-list.sh -O /etc/monitor-scripts/peer-list.sh
+chmod 755 /etc/monitor-scripts/peer-list.sh
+
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/info-height.sh -O /etc/monitor-scripts/info-height.sh
 chmod 755 /etc/monitor-scripts/info-height.sh
 
@@ -61,4 +64,5 @@ sed -i 's/OnUnitActiveSec=120/OnUnitActiveSec=180/g' /etc/systemd/system/helium-
 sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disabled/g' /etc/monitor-scripts/helium-statuses.sh
 
 systemctl daemon-reload
-#bash /etc/biomine-scripts/killStucked.sh
+
+bash /etc/biomine-scripts/killStucked.sh
