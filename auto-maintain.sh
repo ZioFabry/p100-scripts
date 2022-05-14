@@ -48,13 +48,17 @@ if [[ $service == 'enabled' ]]; then
   fi
   if [[ $live_height ]] && [[ $snap_height ]]; then
     let "snapheight_difference = $live_height - $snap_height"
+  else
+    let "snapheight_difference = $live_height"
   fi
 
   if [[ $live_height ]] && [[ $current_info_height ]]; then
     let "blockheight_difference = $live_height - $current_info_height"
+  else
+    let "blockheight_difference = 0"
   fi
 
-  if [[ $blockheight_difference -ge 500 ]]; then
+  if [[ $blockheight_difference -ge 500 ]] && [[ $snapheight_difference -le 300 ]]; then
     if [ ! -f /var/dashboard/statuses/maybeResyncNextMaintain ]; then
         echo "[$(date)] difference of $blockheight_difference found, maybe a fast sync to next cycle..." >> /var/dashboard/logs/auto-maintain.log
         touch /var/dashboard/statuses/maybeResyncNextMaintain
