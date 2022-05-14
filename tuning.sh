@@ -65,4 +65,4 @@ sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disa
 
 systemctl daemon-reload
 
-bash /etc/biomine-scripts/killStucked.sh
+#bash /etc/biomine-scripts/killStucked.sh
