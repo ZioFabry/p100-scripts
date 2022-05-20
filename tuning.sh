@@ -22,6 +22,9 @@ wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/.bash_aliases 
 
 chown -R admin:sudo /home/admin/*
 
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/smesh.sh -O /etc/biomine-scripts/smesh.sh
+chmod 755 /etc/biomine-scripts/smesh.sh
+
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/killStucked.sh -O /etc/biomine-scripts/killStucked.sh
 chmod 755 /etc/biomine-scripts/killStucked.sh
 

@@ -95,10 +95,10 @@ if [[ $service == 'enabled' ]]; then
     echo "[$(date)] Purging old docker content..." >> /var/dashboard/logs/auto-maintain.log
     docker system prune -a --force >> /var/dashboard/logs/auto-maintain.log
 
-    echo "[$(date)] Smashing the seed nodes..." >> /var/dashboard/logs/auto-maintain.log
-    seeds=$(dig +short seed.helium.io)
-    for s in $seeds; do
-      echo "[$(date)] - $(docker exec miner miner peer connect /ip4/$s/tcp/2154)" >> /var/dashboard/logs/auto-maintain.log
-    done
+    #echo "[$(date)] Smashing the seed nodes..." >> /var/dashboard/logs/auto-maintain.log
+    #seeds=$(dig +short seed.helium.io)
+    #for s in $seeds; do
+    #  echo "[$(date)] - $(docker exec miner miner peer connect /ip4/$s/tcp/2154)" >> /var/dashboard/logs/auto-maintain.log
+    #done
   fi
 fi
