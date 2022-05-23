@@ -77,6 +77,9 @@ sed -i 's/OnUnitActiveSec=180/OnUnitActiveSec=300/g' /etc/systemd/system/helium-
 # disable recent_activity
 sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disabled/g' /etc/monitor-scripts/helium-statuses.sh
 
+chmod -x /etc/systemd/system/*.timer
+chmod -x /etc/systemd/system/*.service
+
 systemctl daemon-reload
 
 #bash /etc/biomine-scripts/killStucked.sh
