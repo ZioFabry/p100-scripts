@@ -40,8 +40,8 @@ chmod 755 /etc/monitor-scripts/info-height.sh
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-update.sh -O /etc/monitor-scripts/auto-update.sh
 chmod 755 /etc/monitor-scripts/auto-update.sh
 
-wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update -O /etc/monitor-scripts/dashboard-update
-chmod 755 /etc/monitor-scripts/dashboard-update
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update -O /etc/monitor-scripts/dashboard-update.sh
+chmod 755 /etc/monitor-scripts/dashboard-update.sh
 
 if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
