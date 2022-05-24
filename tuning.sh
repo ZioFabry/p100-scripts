@@ -50,6 +50,12 @@ if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     # customized version of miner-version-check.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
     chmod 755 /etc/monitor-scripts/miner-version-check.sh
+
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/cleanlog.sh -O /home/pi/hnt/script/cleanlog.sh
+    chmod 777 /home/pi/hnt/script/cleanlog.sh
+
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/init.sh -O /home/pi/hnt/script/init.sh
+    chmod 777 /home/pi/hnt/script/init.sh
 else
     wget https://raw.githubusercontent.com/briffy/PantherDashboard/main/monitor-scripts/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
     chmod 755 /etc/monitor-scripts/auto-maintain.sh
@@ -57,12 +63,6 @@ else
     if [ ! -f /home/pi/hnt/script/config/version ]; then
         echo '{"version": "0.01", "type": "p100"}' >/home/pi/hnt/script/config/version
     fi
-
-    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/cleanlog.sh -O /home/pi/hnt/script/cleanlog.sh
-    chmod 777 /home/pi/hnt/script/cleanlog.sh
-
-    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/init.sh -O /home/pi/hnt/script/init.sh
-    chmod 777 /home/pi/hnt/script/init.sh
 fi
 
 echo "Tuning timers..."
