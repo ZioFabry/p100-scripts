@@ -28,6 +28,9 @@ chmod 755 /etc/biomine-scripts/smesh.sh
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/killStucked.sh -O /etc/biomine-scripts/killStucked.sh
 chmod 755 /etc/biomine-scripts/killStucked.sh
 
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/adjust-timer.sh -O /etc/biomine-scripts/adjust-timer.sh
+chmod 755 /etc/biomine-scripts/adjust-timer.sh
+
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/helium-statuses.sh -O /etc/monitor-scripts/helium-statuses.sh
 chmod 755 /etc/monitor-scripts/helium-statuses.sh
 
@@ -68,24 +71,59 @@ fi
 echo "Tuning timers..."
 
 # tune dashboard timers setting
-sed -i 's/OnBootSec=5/OnBootSec=15/g' /etc/systemd/system/bt-check.timer || true
-sed -i 's/OnBootSec=10/OnBootSec=15/g' /etc/systemd/system/bt-check.timer || true
-sed -i 's/OnUnitActiveSec=5/OnUnitActiveSec=15/g' /etc/systemd/system/bt-check.timer || true
-sed -i 's/OnUnitActiveSec=10/OnUnitActiveSec=15/g' /etc/systemd/system/bt-check.timer || true
 
-sed -i 's/OnBootSec=120/OnBootSec=180/g' /etc/systemd/system/infoheight-check.timer || true
-sed -i 's/OnUnitActiveSec=120/OnUnitActiveSec=180/g' /etc/systemd/system/infoheight-check.timer || true
+/etc/biomine-scripts/adjust-timer.sh auto-maintain               30m  1h
+/etc/biomine-scripts/adjust-timer.sh auto-update                  1h  1h
+/etc/biomine-scripts/adjust-timer.sh biomine-ping                30s  1m
+/etc/biomine-scripts/adjust-timer.sh bt-check                     3m 30s
+/etc/biomine-scripts/adjust-timer.sh bt-service-check           240s 15s
+/etc/biomine-scripts/adjust-timer.sh clear-blockchain-check     248s 15s
+/etc/biomine-scripts/adjust-timer.sh cpu-check                   32s 15s
+/etc/biomine-scripts/adjust-timer.sh external-ip-check            5m  1h
+/etc/biomine-scripts/adjust-timer.sh fastsync-check               6m 15s
+/etc/biomine-scripts/adjust-timer.sh gps-check                   45s 15s
+/etc/biomine-scripts/adjust-timer.sh helium-status-check          5m  5m 
+/etc/biomine-scripts/adjust-timer.sh infoheight-check             3m  3m
+/etc/biomine-scripts/adjust-timer.sh local-ip-check               3m  1h
+/etc/biomine-scripts/adjust-timer.sh miner-check                 95s 15s
+/etc/biomine-scripts/adjust-timer.sh miner-service-check        242s 15s
+/etc/biomine-scripts/adjust-timer.sh miner-version-check         45m  1h
+/etc/biomine-scripts/adjust-timer.sh password-check             250s 15s
+/etc/biomine-scripts/adjust-timer.sh peer-list-check              7m  5m
+/etc/biomine-scripts/adjust-timer.sh pf-check                    65s 15s
+/etc/biomine-scripts/adjust-timer.sh pf-service-check           244s 15s
+/etc/biomine-scripts/adjust-timer.sh pubkeys-check               10m  1h
+/etc/biomine-scripts/adjust-timer.sh reboot-check                 1m  5s
+/etc/biomine-scripts/adjust-timer.sh sn-check                    12m  1h
+/etc/biomine-scripts/adjust-timer.sh temp-check                  30s 30s
+/etc/biomine-scripts/adjust-timer.sh update-check                25m  6h
+/etc/biomine-scripts/adjust-timer.sh update-dashboard-check       4m 15s
+/etc/biomine-scripts/adjust-timer.sh update-miner-check           4m 16s
+/etc/biomine-scripts/adjust-timer.sh vpn-check                    4m 17s
+/etc/biomine-scripts/adjust-timer.sh wifi-check                   3m 15s
+/etc/biomine-scripts/adjust-timer.sh wifi-config-check            2m 14s
+/etc/biomine-scripts/adjust-timer.sh wifi-service-check         246s 15s
 
-sed -i 's/OnBootSec=60/OnBootSec=300/g' /etc/systemd/system/peer-list-check.timer || true
-sed -i 's/OnUnitActiveSec=60/OnUnitActiveSec=300/g' /etc/systemd/system/peer-list-check.timer || true
-
-sed -i 's/OnBootSec=120/OnBootSec=300/g' /etc/systemd/system/helium-status-check.timer || true
-sed -i 's/OnBootSec=180/OnBootSec=300/g' /etc/systemd/system/helium-status-check.timer || true
-sed -i 's/OnUnitActiveSec=120/OnUnitActiveSec=300/g' /etc/systemd/system/helium-status-check.timer || true
-sed -i 's/OnUnitActiveSec=180/OnUnitActiveSec=300/g' /etc/systemd/system/helium-status-check.timer || true
+### sed -i 's/OnBootSec=5/OnBootSec=15/g' /etc/systemd/system/bt-check.timer || true
+### sed -i 's/OnBootSec=10/OnBootSec=15/g' /etc/systemd/system/bt-check.timer || true
+### sed -i 's/OnUnitActiveSec=5/OnUnitActiveSec=15/g' /etc/systemd/system/bt-check.timer || true
+### sed -i 's/OnUnitActiveSec=10/OnUnitActiveSec=15/g' /etc/systemd/system/bt-check.timer || true
+### 
+### sed -i 's/OnBootSec=120/OnBootSec=180/g' /etc/systemd/system/infoheight-check.timer || true
+### sed -i 's/OnUnitActiveSec=120/OnUnitActiveSec=180/g' /etc/systemd/system/infoheight-check.timer || true
+### 
+### sed -i 's/OnBootSec=60/OnBootSec=300/g' /etc/systemd/system/peer-list-check.timer || true
+### sed -i 's/OnUnitActiveSec=60/OnUnitActiveSec=300/g' /etc/systemd/system/peer-list-check.timer || true
+### 
+### sed -i 's/OnBootSec=120/OnBootSec=300/g' /etc/systemd/system/helium-status-check.timer || true
+### sed -i 's/OnBootSec=180/OnBootSec=300/g' /etc/systemd/system/helium-status-check.timer || true
+### sed -i 's/OnUnitActiveSec=120/OnUnitActiveSec=300/g' /etc/systemd/system/helium-status-check.timer || true
+### sed -i 's/OnUnitActiveSec=180/OnUnitActiveSec=300/g' /etc/systemd/system/helium-status-check.timer || true
 
 # disable recent_activity
 sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disabled/g' /etc/monitor-scripts/helium-statuses.sh
+
+sed -i 's/init.sh \&/init.sh \> \/dev\/null \&/g' /etc/rc.local
 
 chmod -x /etc/systemd/system/*.timer
 chmod -x /etc/systemd/system/*.service
