@@ -43,9 +43,6 @@ chmod 755 /etc/monitor-scripts/info-height.sh
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-update.sh -O /etc/monitor-scripts/auto-update.sh
 chmod 755 /etc/monitor-scripts/auto-update.sh
 
-wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update -O /etc/monitor-scripts/dashboard-update.sh
-chmod 755 /etc/monitor-scripts/dashboard-update.sh
-
 if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
     chmod 755 /etc/monitor-scripts/auto-maintain.sh
@@ -60,12 +57,14 @@ if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/init.sh -O /home/pi/hnt/script/init.sh
     chmod 777 /home/pi/hnt/script/init.sh
 
-    if [ ! -f /home/pi/hnt/script/config/version ]; then
-        echo '{"version": "0.01", "type": "p100"}' >/home/pi/hnt/script/config/version
-    fi
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update -O /etc/monitor-scripts/dashboard-update.sh
+    chmod 755 /etc/monitor-scripts/dashboard-update.sh
 else
     wget https://raw.githubusercontent.com/briffy/PantherDashboard/main/monitor-scripts/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
     chmod 755 /etc/monitor-scripts/auto-maintain.sh
+
+    wget https://raw.githubusercontent.com/briffy/PantherDashboard/main/monitor-scripts/dashboard-update.sh -O /etc/monitor-scripts/dashboard-update.sh
+    chmod 755 /etc/monitor-scripts/pubkeys.sh
 fi
 
 echo "Tuning timers..."
@@ -81,7 +80,7 @@ echo "Tuning timers..."
 /etc/biomine-scripts/adjust-timer.sh cpu-check                   32s 15s
 /etc/biomine-scripts/adjust-timer.sh external-ip-check            5m  1h
 /etc/biomine-scripts/adjust-timer.sh fastsync-check               6m 15s
-/etc/biomine-scripts/adjust-timer.sh gps-check                   45s 15s
+/etc/biomine-scripts/adjust-timer.sh gps-check                    4m 30s
 /etc/biomine-scripts/adjust-timer.sh helium-status-check          5m  5m 
 /etc/biomine-scripts/adjust-timer.sh infoheight-check             3m  3m
 /etc/biomine-scripts/adjust-timer.sh local-ip-check               3m  1h
