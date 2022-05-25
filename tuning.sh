@@ -64,7 +64,7 @@ else
     chmod 755 /etc/monitor-scripts/auto-maintain.sh
 
     wget https://raw.githubusercontent.com/briffy/PantherDashboard/main/monitor-scripts/dashboard-update.sh -O /etc/monitor-scripts/dashboard-update.sh
-    chmod 755 /etc/monitor-scripts/pubkeys.sh
+    chmod 755 /etc/monitor-scripts/dashboard-update.sh
 fi
 
 echo "Tuning timers..."
