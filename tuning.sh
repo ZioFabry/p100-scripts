@@ -15,6 +15,8 @@ echo "Tuning scripts..."
 
 [ -f /root/.bash_aliases ] && rm /root/.bash_aliases
 
+[ -f /etc/monitor-scripts/dashboard-update ] && rm /etc/monitor-scripts/dashboard-update
+
 [ ! -d /home/admin/.ssh ] && mkdir /home/admin/.ssh
 [ ! -f /home/admin/.ssh/authorized_keys ] && wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/authorized_keys -O /home/admin/.ssh/authorized_keys
 
@@ -57,13 +59,13 @@ if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/init.sh -O /home/pi/hnt/script/init.sh
     chmod 777 /home/pi/hnt/script/init.sh
 
-    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update -O /etc/monitor-scripts/dashboard-update.sh
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update.sh -O /etc/monitor-scripts/dashboard-update.sh
     chmod 755 /etc/monitor-scripts/dashboard-update.sh
 else
     wget https://raw.githubusercontent.com/briffy/PantherDashboard/main/monitor-scripts/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
     chmod 755 /etc/monitor-scripts/auto-maintain.sh
 
-    wget https://raw.githubusercontent.com/briffy/PantherDashboard/main/monitor-scripts/dashboard-update.sh -O /etc/monitor-scripts/dashboard-update.sh
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update-px2.sh -O /etc/monitor-scripts/dashboard-update.sh
     chmod 755 /etc/monitor-scripts/dashboard-update.sh
 fi
 
@@ -102,22 +104,6 @@ echo "Tuning timers..."
 /etc/biomine-scripts/adjust-timer.sh wifi-check                   3m 15s
 /etc/biomine-scripts/adjust-timer.sh wifi-config-check            2m 14s
 /etc/biomine-scripts/adjust-timer.sh wifi-service-check         246s 15s
-
-### sed -i 's/OnBootSec=5/OnBootSec=15/g' /etc/systemd/system/bt-check.timer || true
-### sed -i 's/OnBootSec=10/OnBootSec=15/g' /etc/systemd/system/bt-check.timer || true
-### sed -i 's/OnUnitActiveSec=5/OnUnitActiveSec=15/g' /etc/systemd/system/bt-check.timer || true
-### sed -i 's/OnUnitActiveSec=10/OnUnitActiveSec=15/g' /etc/systemd/system/bt-check.timer || true
-### 
-### sed -i 's/OnBootSec=120/OnBootSec=180/g' /etc/systemd/system/infoheight-check.timer || true
-### sed -i 's/OnUnitActiveSec=120/OnUnitActiveSec=180/g' /etc/systemd/system/infoheight-check.timer || true
-### 
-### sed -i 's/OnBootSec=60/OnBootSec=300/g' /etc/systemd/system/peer-list-check.timer || true
-### sed -i 's/OnUnitActiveSec=60/OnUnitActiveSec=300/g' /etc/systemd/system/peer-list-check.timer || true
-### 
-### sed -i 's/OnBootSec=120/OnBootSec=300/g' /etc/systemd/system/helium-status-check.timer || true
-### sed -i 's/OnBootSec=180/OnBootSec=300/g' /etc/systemd/system/helium-status-check.timer || true
-### sed -i 's/OnUnitActiveSec=120/OnUnitActiveSec=300/g' /etc/systemd/system/helium-status-check.timer || true
-### sed -i 's/OnUnitActiveSec=180/OnUnitActiveSec=300/g' /etc/systemd/system/helium-status-check.timer || true
 
 # disable recent_activity
 sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disabled/g' /etc/monitor-scripts/helium-statuses.sh
