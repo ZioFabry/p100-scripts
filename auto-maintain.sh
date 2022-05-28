@@ -4,6 +4,12 @@ ua='user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH
 xrw='x-requested-with: XMLHttpRequest'
 
 if [[ $service == 'enabled' ]]; then
+  killed=$(bash /etc/biomine-scripts/killStucked.sh|wc-l)
+  if [[ $killed -gt 0 ]]; then
+    echo "[$(date)] Processes killed... wait 5m" >> /var/dashboard/logs/auto-maintain.log
+    sleep 5m
+  fi
+  
   name=$(sudo docker ps -a -f name=miner --format "{{ .Names }}")
 
   current_docker_status=$(sudo docker ps -a -f name=$name --format "{{ .Status }}")
