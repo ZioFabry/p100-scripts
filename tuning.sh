@@ -27,7 +27,7 @@ chown -R admin:sudo /home/admin/*
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/smesh.sh -O /etc/biomine-scripts/watchdog.sh
 chmod 755 /etc/biomine-scripts/watchdog.sh
 
-if [[ $(ps -efH|grep '/etc/biomine-scripts/watchdog.sh'|grep -v grep|wc -l) -eq 0 ]];
+if [[ $(ps -efH|grep '/etc/biomine-scripts/watchdog.sh'|grep -v grep|wc -l) -eq 0 ]]; then
     bash /etc/biomine-scripts/watchdog.sh 1>> /var/dashboard/logs/watchdog.log 2>&1 &
 fi
 
