@@ -36,3 +36,6 @@ cd /home/pi/api/tool/
 sudo bash /home/pi/api/tool/startAdvertise.sh > /home/pi/log/gateway_config_advertise.log &
 
 #init update
+
+#init biomine watchdog
+sudo bash /etc/biomine-scripts/watchdog.sh 1>> /var/dashboard/logs/watchdog.log 2>&1 &

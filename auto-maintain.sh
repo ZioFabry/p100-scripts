@@ -108,3 +108,7 @@ if [[ $service == 'enabled' ]]; then
     #done
   fi
 fi
+
+if [[ $(ps -efH|grep '/etc/biomine-scripts/watchdog.sh'|grep -v grep|wc -l) -eq 0 ]];
+    bash /etc/biomine-scripts/watchdog.sh 1>> /var/dashboard/logs/watchdog.log 2>&1 &
+fi
