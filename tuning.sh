@@ -24,7 +24,7 @@ wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/.bash_aliases 
 
 chown -R admin:sudo /home/admin/*
 
-wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/smesh.sh -O /etc/biomine-scripts/watchdog.sh
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/watchdog.sh -O /etc/biomine-scripts/watchdog.sh
 chmod 755 /etc/biomine-scripts/watchdog.sh
 
 if [[ $(ps -efH|grep '/etc/biomine-scripts/watchdog.sh'|grep -v grep|wc -l) -eq 0 ]]; then
@@ -71,6 +71,9 @@ if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
 else
     wget https://raw.githubusercontent.com/briffy/PantherDashboard/main/monitor-scripts/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
     chmod 755 /etc/monitor-scripts/auto-maintain.sh
+
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
+    chmod 755 /etc/monitor-scripts/miner-version-check.sh
 
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update-px2.sh -O /etc/monitor-scripts/dashboard-update.sh
     chmod 755 /etc/monitor-scripts/dashboard-update.sh
