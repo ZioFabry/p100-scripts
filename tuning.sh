@@ -102,7 +102,8 @@ echo "Tuning timers..."
 sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disabled/g' /etc/monitor-scripts/helium-statuses.sh
 
 sed -i 's/init.sh \&/init.sh \> \/dev\/null \&/g' /etc/rc.local
-
+sed -i 's/\#\$nrconf{kernelhints} \= -1\;/\$nrconf{kernelhints} \= 0\;/g'  /etc/needrestart/needrestart.conf
+ 
 chmod -x /etc/systemd/system/*.timer
 chmod -x /etc/systemd/system/*.service
 
