@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Updating BioCC..."
+[[ ! -d /etc/biomine-scripts ]] && mkdir /etc/biomine-scripts
 
 # Update BioCC
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/ping.sh -O /etc/biomine-scripts/ping.sh
@@ -15,10 +15,6 @@ systemctl start biomine-ping.service
 
 systemctl daemon-reload
 
-echo "Tuning..."
+echo "Running Tuning..."
 
 curl -s https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/tuning.sh | sudo bash
-
-#echo "running killStucked script..."
-#/etc/biomine-scripts/killStucked.sh
-

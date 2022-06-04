@@ -22,62 +22,45 @@ echo "Tuning scripts..."
 
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/.bash_aliases -O /home/admin/.bash_aliases
 
-chown -R admin:sudo /home/admin/*
-
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/watchdog.sh -O /etc/biomine-scripts/watchdog.sh
-chmod 755 /etc/biomine-scripts/watchdog.sh
-
-if [[ $(ps -efH|grep '/etc/biomine-scripts/watchdog.sh'|grep -v grep|wc -l) -eq 0 ]]; then
-    bash /etc/biomine-scripts/watchdog.sh 1>> /var/dashboard/logs/watchdog.log 2>&1 &
-fi
-
+wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/watchdog_cycle.sh -O /etc/biomine-scripts/watchdog_cycle.sh
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/smesh.sh -O /etc/biomine-scripts/smesh.sh
-chmod 755 /etc/biomine-scripts/smesh.sh
-
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/killStucked.sh -O /etc/biomine-scripts/killStucked.sh
-chmod 755 /etc/biomine-scripts/killStucked.sh
-
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/adjust-timer.sh -O /etc/biomine-scripts/adjust-timer.sh
-chmod 755 /etc/biomine-scripts/adjust-timer.sh
 
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/helium-statuses.sh -O /etc/monitor-scripts/helium-statuses.sh
-chmod 755 /etc/monitor-scripts/helium-statuses.sh
-
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/peer-list.sh -O /etc/monitor-scripts/peer-list.sh
-chmod 755 /etc/monitor-scripts/peer-list.sh
-
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/info-height.sh -O /etc/monitor-scripts/info-height.sh
-chmod 755 /etc/monitor-scripts/info-height.sh
-
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-update.sh -O /etc/monitor-scripts/auto-update.sh
-chmod 755 /etc/monitor-scripts/auto-update.sh
 
 if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
-    chmod 755 /etc/monitor-scripts/auto-maintain.sh
-
-    # customized version of miner-version-check.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
-    chmod 755 /etc/monitor-scripts/miner-version-check.sh
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update.sh -O /etc/monitor-scripts/dashboard-update.sh
 
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/cleanlog.sh -O /home/pi/hnt/script/cleanlog.sh
-    chmod 777 /home/pi/hnt/script/cleanlog.sh
-
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/init.sh -O /home/pi/hnt/script/init.sh
-    chmod 777 /home/pi/hnt/script/init.sh
+    chmod 777 /home/pi/hnt/script/*.sh
 
-    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update.sh -O /etc/monitor-scripts/dashboard-update.sh
-    chmod 755 /etc/monitor-scripts/dashboard-update.sh
 else
     wget https://raw.githubusercontent.com/briffy/PantherDashboard/main/monitor-scripts/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
-    chmod 755 /etc/monitor-scripts/auto-maintain.sh
-
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
-    chmod 755 /etc/monitor-scripts/miner-version-check.sh
-
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update-px2.sh -O /etc/monitor-scripts/dashboard-update.sh
-    chmod 755 /etc/monitor-scripts/dashboard-update.sh
 fi
+
+chown -R admin:sudo /home/admin/*
+chmod 755 /etc/biomine-scripts/*.sh
+chmod 755 /etc/monitor-scripts/*.sh
+
+echo "Watchdog..."
+
+CPID=$(ps -efH|grep '/etc/biomine-scripts/watchdog.sh'|grep -v grep|wc -l)
+
+if [[ $CPID -gt 0 ]]; then
+    kill -9 $(pgrep -f /etc/biomine-scripts/watchdog.sh)
+fi
+
+bash /etc/biomine-scripts/watchdog.sh 1>> /var/dashboard/logs/watchdog.log 2>&1 &
 
 echo "Tuning timers..."
 
@@ -124,5 +107,3 @@ chmod -x /etc/systemd/system/*.timer
 chmod -x /etc/systemd/system/*.service
 
 systemctl daemon-reload
-
-#bash /etc/biomine-scripts/killStucked.sh
