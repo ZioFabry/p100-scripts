@@ -37,10 +37,10 @@ if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update.sh -O /etc/monitor-scripts/dashboard-update.sh
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-update-piesces.sh -O /etc/monitor-scripts/miner-update.sh
 
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/cleanlog.sh -O /home/pi/hnt/script/cleanlog.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/init.sh -O /home/pi/hnt/script/init.sh
-    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-update-piesces.sh -O /home/pi/hnt/script/miner-update.sh
     chmod 777 /home/pi/hnt/script/*.sh
 
     curl -Lf https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/sys.config -o /home/pi/hnt/miner/configs/sys.config
