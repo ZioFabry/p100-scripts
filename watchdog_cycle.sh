@@ -23,3 +23,21 @@ if [[ $(ps -efH|egrep '\<defunct\>'|wc -l) -gt 5 ]]; then
         echo "[$(date)] 2nd check ok."
     fi
 fi
+
+#
+CPU=$(ps -C lora_pkt_fwd -o %cpu | tail -1 | tr -d ' ' | tr -d '\n')
+if [[ $CPU -gt 80 ]]; then
+    echo "[$(date)] Process lora_pkt_fwd high usage, wait 1 min then recheck..."
+    sleep 1m
+    CPU=$(ps -C lora_pkt_fwd -o %cpu | tail -1 | tr -d ' ' | tr -d '\n')
+    if [[ $CPU -gt 80 ]]; then
+        echo "[$(date)] Process lora_pkt_fwd still high usage... restarting."
+        kill -9 $(pgrep lora_pkt_+)
+        sleep 5s
+        cd /home/pi/hnt/paket/paket/packet_forwarder/
+        ./lora_pkt_fwd >> /dev/null 2>&1
+        echo "[$(date)] Process lora_pkt_fwd restarted."
+    else
+        echo "[$(date)] Process lora_pkt_fwd normal usage."
+    fi
+fi
