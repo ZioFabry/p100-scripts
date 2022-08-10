@@ -34,8 +34,7 @@ if [[ $CPU -gt 80 ]]; then
         echo "[$(date)] Process lora_pkt_fwd still high usage... restarting."
         kill -9 $(pgrep lora_pkt_+)
         sleep 5s
-        cd /home/pi/hnt/paket/paket/packet_forwarder/
-        ./lora_pkt_fwd >> /dev/null 2>&1
+        sudo bash /home/pi/api/tool/onPacket.sh
         echo "[$(date)] Process lora_pkt_fwd restarted."
     else
         echo "[$(date)] Process lora_pkt_fwd normal usage."
