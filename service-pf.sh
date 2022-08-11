@@ -8,8 +8,8 @@ if [[ $status == 'stop' ]]; then
 fi
 
 if [[ $status == 'start' ]]; then
-  sudo bash /home/pi/api/tool/onPacket.sh
   echo 'starting' > /var/dashboard/services/PF
+  /home/pi/api/tool/onPacket.sh 1>>/dev/null 2>&1
 fi
 
 if [[ $status == 'starting' ]]; then
