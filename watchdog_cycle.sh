@@ -25,11 +25,11 @@ if [[ $(ps -efH|egrep '\<defunct\>'|wc -l) -gt 5 ]]; then
 fi
 
 #
-CPU=$(ps -C lora_pkt_fwd -o %cpu | tail -1 | tr -d ' ' | tr -d '\n'|awk -F '.' '{print $1}')
+CPU=$(ps -C lora_pkt_fwd -o %cpu | tail -1 | tr -d ' ' | tr -d '\n'|awk -F '.' '{print $1}'|grep -v '%')
 if [[ $CPU -gt 80 ]]; then
     echo "[$(date)] Process lora_pkt_fwd high usage, wait 1 min then recheck..."
     sleep 1m
-    CPU=$(ps -C lora_pkt_fwd -o %cpu | tail -1 | tr -d ' ' | tr -d '\n'|awk -F '.' '{print $1}')
+    CPU=$(ps -C lora_pkt_fwd -o %cpu | tail -1 | tr -d ' ' | tr -d '\n'|awk -F '.' '{print $1}'|grep -v '%')
     if [[ $CPU -gt 80 ]]; then
         echo "[$(date)] Process lora_pkt_fwd still high usage... restarting."
         kill -9 $(pgrep lora_pkt_+)
