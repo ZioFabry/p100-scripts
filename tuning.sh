@@ -15,6 +15,8 @@ echo "Tuning scripts..."
 
 [ -f /root/.bash_aliases ] && rm /root/.bash_aliases
 
+[ -f /etc/monitor-scripts/service-pf ] && rm /etc/monitor-scripts/service-pf
+
 [ -f /etc/monitor-scripts/dashboard-update ] && rm /etc/monitor-scripts/dashboard-update
 
 [ ! -d /home/admin/.ssh ] && mkdir /home/admin/.ssh
@@ -38,7 +40,7 @@ if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update.sh -O /etc/monitor-scripts/dashboard-update.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-update-piesces.sh -O /etc/monitor-scripts/miner-update.sh
-    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/service-pf.sh -O /etc/monitor-scripts/service-pf
+    wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/service-pf.sh -O /etc/monitor-scripts/service-pf.sh
 
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/cleanlog.sh -O /home/pi/hnt/script/cleanlog.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/init.sh -O /home/pi/hnt/script/init.sh
