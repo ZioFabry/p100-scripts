@@ -9,7 +9,7 @@ fi
 
 if [[ $status == 'start' ]]; then
   echo 'starting' > /var/dashboard/services/PF
-  /home/pi/api/tool/onPacket.sh 1>>/dev/null 2>&1
+  bash /home/pi/api/tool/onPacket.sh 1>/dev/null 2>&1 &
 fi
 
 if [[ $status == 'starting' ]]; then
