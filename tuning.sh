@@ -36,6 +36,9 @@ wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/info-height.sh
 wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-update.sh -O /etc/monitor-scripts/auto-update.sh
 
 if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
+    #
+    #   Pisces
+    #
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-maintain.sh -O /etc/monitor-scripts/auto-maintain.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update.sh -O /etc/monitor-scripts/dashboard-update.sh
@@ -47,7 +50,21 @@ if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     chmod 777 /home/pi/hnt/script/*.sh
 
     curl -Lf https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/sys.config -o /home/pi/hnt/miner/configs/sys.config
+    
+    if [[ $(cat /home/pi/hnt/paket/paket/packet_forwarder/global_conf.json|grep gps_tty_path|wc -l) -gt 0 ]]; then
+        echo "Fixing global_conf.json..."
+        cat /home/pi/hnt/paket/paket/packet_forwarder/global_conf.json|grep -v gps_tty_path >/home/pi/hnt/paket/paket/packet_forwarder/global_conf_fixed.json
+        cp /home/pi/hnt/paket/paket/packet_forwarder/global_conf_fixed.json /home/pi/hnt/paket/paket/packet_forwarder/global_conf.json
+        echo "Restarting Packet Forwarder..."
+        kill -9 $(pgrep lora_pkt_+)
+        sleep 5s
+        bash /home/pi/api/tool/onPacket.sh 1>/dev/null 2>&1 &
+        echo "Packet Forwarder Restarted..."
+    fi
 else
+    #
+    #   Panther
+    #
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/auto-maintain-px2.sh -O /etc/monitor-scripts/auto-maintain.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/miner-version-check.sh -O /etc/monitor-scripts/miner-version-check.sh
     wget https://raw.githubusercontent.com/ZioFabry/p100-scripts/main/dashboard-update-px2.sh -O /etc/monitor-scripts/dashboard-update.sh
