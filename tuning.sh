@@ -50,7 +50,7 @@ if [ ! -f /var/dashboard/statuses/pantherx_ver ]; then
     chmod 777 /home/pi/hnt/script/*.sh
 
     curl -Lf http://pisces-firmware.sidcloud.cn/0.55/sys.config -o /home/pi/hnt/miner/configs/sys.config
-    curl -Lf http://pisces-firmware.sidcloud.cn/0.55/version -O /home/pi/api/tool/version
+    curl -Lf http://pisces-firmware.sidcloud.cn/0.55/version -o /home/pi/api/tool/version
     
     if [[ $(cat /home/pi/hnt/paket/paket/packet_forwarder/global_conf.json|grep gps_tty_path|wc -l) -gt 0 ]]; then
         echo "Fixing global_conf.json..."
