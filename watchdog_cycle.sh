@@ -40,3 +40,22 @@ if [[ $CPU -gt 80 ]]; then
         echo "[$(date)] Process lora_pkt_fwd normal usage."
     fi
 fi
+
+DEFGW="`ip route show|grep "default"|awk '{print $3;}'`"
+
+ping -c 1 -W 1 "$DEFGW" 1>/dev/null 2>&1
+RES=$?
+
+if [ $RES -eq 1 ]; then
+    echo "[$(date)] $DEFGW is dead... wait 5m..."
+
+    sleep 5m
+
+    ping -c 1 -W 1 "$DEFGW" 1>/dev/null 2>&1
+    RES=$?
+
+    if [ $RES -eq 1 ]; then
+        echo "[$(date)] $DEFGW is still dead... reboot..."
+        reboot -f
+    fi
+fi
