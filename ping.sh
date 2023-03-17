@@ -26,6 +26,12 @@ diskusage=$(df -h /|grep -v File|awk '{print $5}'|tr -d '%')
 externalip=$(curl -4 icanhazip.com)
 uptime=$(uptime)
 
+if [ ! -f /var/dashboard/logs/watchdog.log ]; then
+    echo "[$(date)] Created missing log file" > /var/dashboard/logs/watchdog.log
+fi
+
+lastwd=$(tail -1 /var/dashboard/logs/watchdog.log 2>&1|base64 -w 0)
+
 JSON="{\"lanmacaddr\":\"${lanmac}\""
 JSON=$JSON",\"wlanmacaddr\":\"${wlanmac}\""
 JSON=$JSON",\"lanip\":\"${lanip}\""
@@ -34,6 +40,7 @@ JSON=$JSON",\"externalip\":\"${externalip}\""
 JSON=$JSON",\"diskusage\":\"${diskusage}\""
 JSON=$JSON",\"uptime\":\"${uptime}\""
 JSON=$JSON",\"hostname\":\"${hostname}\""
+JSON=$JSON",\"lastwd\":\"${lastwd}\""
 
 FILES="/var/dashboard/statuses/*"
 for f in $FILES;
