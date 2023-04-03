@@ -130,4 +130,14 @@ sed -i 's/\#\$nrconf{kernelhints} \= -1\;/\$nrconf{kernelhints} \= 0\;/g'  /etc/
 chmod -x /etc/systemd/system/*.timer
 chmod -x /etc/systemd/system/*.service
 
+if [ -f /etc/init.d/zerotier-one ]; then
+    echo "disinstall zerotier-one..."
+    /etc/init.d/zerotier-one stop
+    apt remove -y zerotier-one
+    rm -f /etc/init.d/zerotier-one
+    rm -f /etc/init/zerotier-one.conf
+
+    echo "disinstall zerotier-one... done"
+fi
+
 systemctl daemon-reload
