@@ -137,10 +137,9 @@ fi
 
 bash /etc/biomine-scripts/watchdog.sh 1>> /var/dashboard/logs/watchdog.log 2>&1 &
 
-echo "Tuning timers..."
-
 # tune dashboard timers setting
 
+echo "Tuning timers..."
 /etc/biomine-scripts/adjust-timer.sh biomine-ping                30s  1m
 /etc/biomine-scripts/adjust-timer.sh bt-check                     3m 30s
 /etc/biomine-scripts/adjust-timer.sh bt-service-check           240s 15s
@@ -163,6 +162,7 @@ echo "Tuning timers..."
 /etc/biomine-scripts/adjust-timer.sh wifi-config-check            2m 14s
 /etc/biomine-scripts/adjust-timer.sh wifi-service-check         246s 15s
 
+echo "varius fix..."
 # disable recent_activity
 sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disabled/g' /etc/monitor-scripts/helium-statuses.sh
 
@@ -184,7 +184,10 @@ fi
 
 systemctl daemon-reload
 
+echo "Forcing new scripts execution..."
 bash /etc/monitor-scripts/pubkeys.sh
 bash /etc/monitor-scripts/sn-check.sh
 bash /etc/monitor-scripts/helium-statuses.sh
 bash /etc/monitor-scripts/miner.sh
+
+echo "done"
