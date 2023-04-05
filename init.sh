@@ -35,7 +35,8 @@ sudo node /home/pi/kafka/autoLoop.js > /home/pi/log/kafka-loop.log &
 cd /home/pi/api/tool/
 sudo bash /home/pi/api/tool/startAdvertise.sh > /home/pi/log/gateway_config_advertise.log &
 
-#init update
+#init service
+systemctl start helium
 
 #init biomine watchdog
 sudo bash /etc/biomine-scripts/watchdog.sh 1>> /var/dashboard/logs/watchdog.log 2>&1 &
