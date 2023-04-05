@@ -65,7 +65,10 @@ systemctl disable auto-update.timer || true
 [ -f /etc/systemd/system/auto-update.timer ] && rm -rf /etc/systemd/system/auto-update.timer
 [ -f /etc/monitor-script/auto-update.sh ] && rm -rf /etc/monitor-script/auto-update.sh
 
+systemctl disable clear-blockchain-check.timer || true
 systemctl disable clear-blockchain.timer || true
+[ -f /etc/systemd/system/clear-blockchain-check.timer ] && rm -rf /etc/systemd/system/clear-blockchain-check.timer
+[ -f /etc/systemd/system/clear-blockchain-check.service ] && rm -rf /etc/systemd/system/clear-blockchain-check.service
 [ -f /etc/systemd/system/clear-blockchain.timer ] && rm -rf /etc/systemd/system/clear-blockchain.timer
 [ -f /etc/systemd/system/clear-blockchain.service ] && rm -rf /etc/systemd/system/clear-blockchain.service
 [ -f /etc/monitor-scripts/clear-blockchain.sh ] && rm -rf /etc/monitor-scripts/clear-blockchain.sh
