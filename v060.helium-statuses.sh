@@ -10,7 +10,7 @@ xrw='x-requested-with: XMLHttpRequest'
 recent_activity=disabled
 
 if [[ $pubkey ]]; then
-    data=$(wget -qO- -H $ua -H $xrw $uri)
+    data=$(curl -Lf --silent $uri)
     online_status=$(echo $data | grep -Po '"online":".*?[^\\]"' | sed -e 's/^"online"://' | tr -d '"')
     lat=$(echo $data | grep -Po '"lat":[^\,]+' | sed -e 's/^"lat"://')
     lng=$(echo $data | grep -Po '"lng":[^\,]+' | sed -e 's/^"lng"://')
@@ -20,7 +20,7 @@ else
     lng="-1"
 fi
 
-height=$(wget -qO- -H $ua -H $xrw 'https://api.helium.io/v1/blocks/height' | grep -Po '"height":[^}]+' | sed -e 's/^"height"://')
+height=$(curl -Lf --silent 'https://api.helium.io/v1/blocks/height' | grep -Po '"height":[^}]+' | sed -e 's/^"height"://')
 
 echo $online_status > /var/dashboard/statuses/online_status
 echo $lat > /var/dashboard/statuses/lat

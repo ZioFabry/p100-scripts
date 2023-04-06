@@ -66,11 +66,8 @@ systemctl disable auto-update.timer || true
 [ -f /etc/monitor-script/auto-update.sh ] && rm -rf /etc/monitor-script/auto-update.sh
 
 systemctl disable clear-blockchain-check.timer || true
-systemctl disable clear-blockchain.timer || true
 [ -f /etc/systemd/system/clear-blockchain-check.timer ] && rm -rf /etc/systemd/system/clear-blockchain-check.timer
 [ -f /etc/systemd/system/clear-blockchain-check.service ] && rm -rf /etc/systemd/system/clear-blockchain-check.service
-[ -f /etc/systemd/system/clear-blockchain.timer ] && rm -rf /etc/systemd/system/clear-blockchain.timer
-[ -f /etc/systemd/system/clear-blockchain.service ] && rm -rf /etc/systemd/system/clear-blockchain.service
 [ -f /etc/monitor-scripts/clear-blockchain.sh ] && rm -rf /etc/monitor-scripts/clear-blockchain.sh
 
 systemctl disable fastsync-check.timer || true
@@ -140,27 +137,33 @@ bash /etc/biomine-scripts/watchdog.sh 1>> /var/dashboard/logs/watchdog.log 2>&1 
 # tune dashboard timers setting
 
 echo "Tuning timers..."
+
 /etc/biomine-scripts/adjust-timer.sh biomine-ping                30s  1m
-/etc/biomine-scripts/adjust-timer.sh bt-check                     3m 30s
-/etc/biomine-scripts/adjust-timer.sh bt-service-check           240s 15s
-/etc/biomine-scripts/adjust-timer.sh cpu-check                   32s 15s
-/etc/biomine-scripts/adjust-timer.sh external-ip-check            5m  1h
-/etc/biomine-scripts/adjust-timer.sh gps-check                    4m 30s
-/etc/biomine-scripts/adjust-timer.sh helium-status-check          5m  5m 
+
+/etc/biomine-scripts/adjust-timer.sh miner-check                 60s 30s
+/etc/biomine-scripts/adjust-timer.sh temp-check                  80s 30s
+/etc/biomine-scripts/adjust-timer.sh reboot-check               100s 30s
+/etc/biomine-scripts/adjust-timer.sh bt-check                   120s 30s 
+/etc/biomine-scripts/adjust-timer.sh gps-check                  140s 30s
+/etc/biomine-scripts/adjust-timer.sh cpu-check                  160s 30s
+/etc/biomine-scripts/adjust-timer.sh pf-check                   190s 30s
+/etc/biomine-scripts/adjust-timer.sh vpn-check                  210s 30s
+/etc/biomine-scripts/adjust-timer.sh wifi-check                 230s 30s
+/etc/biomine-scripts/adjust-timer.sh password-check             250s 30s
+
+/etc/biomine-scripts/adjust-timer.sh bt-service-check           270s  1m
+/etc/biomine-scripts/adjust-timer.sh miner-service-check        300s  1m
+/etc/biomine-scripts/adjust-timer.sh pf-service-check           320s  1m
+/etc/biomine-scripts/adjust-timer.sh wifi-service-check         340s  1m
+/etc/biomine-scripts/adjust-timer.sh wifi-config-check          360s  1m
+
+/etc/biomine-scripts/adjust-timer.sh helium-status-check         10m 30m 
+
 /etc/biomine-scripts/adjust-timer.sh local-ip-check               3m  1h
-/etc/biomine-scripts/adjust-timer.sh miner-check                 95s 15s
-/etc/biomine-scripts/adjust-timer.sh miner-service-check        242s 15s
-/etc/biomine-scripts/adjust-timer.sh password-check             250s 15s
-/etc/biomine-scripts/adjust-timer.sh pf-check                    65s 15s
-/etc/biomine-scripts/adjust-timer.sh pf-service-check           244s 15s
-/etc/biomine-scripts/adjust-timer.sh pubkeys-check               10m  1h
-/etc/biomine-scripts/adjust-timer.sh reboot-check                 1m  5s
-/etc/biomine-scripts/adjust-timer.sh sn-check                    12m  1h
-/etc/biomine-scripts/adjust-timer.sh temp-check                  30s 30s
-/etc/biomine-scripts/adjust-timer.sh vpn-check                    4m 17s
-/etc/biomine-scripts/adjust-timer.sh wifi-check                   3m 15s
-/etc/biomine-scripts/adjust-timer.sh wifi-config-check            2m 14s
-/etc/biomine-scripts/adjust-timer.sh wifi-service-check         246s 15s
+/etc/biomine-scripts/adjust-timer.sh sn-check                     4m  1h
+/etc/biomine-scripts/adjust-timer.sh external-ip-check            5m  1h
+/etc/biomine-scripts/adjust-timer.sh pubkeys-check                6m  1h
+
 
 echo "varius fix..."
 # disable recent_activity
@@ -184,10 +187,10 @@ fi
 
 systemctl daemon-reload
 
-echo "Forcing new scripts execution..."
-bash /etc/monitor-scripts/pubkeys.sh
-bash /etc/monitor-scripts/sn-check.sh
-bash /etc/monitor-scripts/helium-statuses.sh
-bash /etc/monitor-scripts/miner.sh
+#echo "Forcing new scripts execution..."
+#bash /etc/monitor-scripts/pubkeys.sh
+#bash /etc/monitor-scripts/sn-check.sh
+#bash /etc/monitor-scripts/helium-statuses.sh
+#bash /etc/monitor-scripts/miner.sh
 
 echo "done"
