@@ -23,6 +23,7 @@ if [ ! "$(jq .version /home/pi/api/tool/version)" == "0.6" ] ; then
     wait
     echo "waiting 30s after the upgrade..."
     sleep 30s
+fi
 
 if [ "$(jq .version /home/pi/api/tool/version)" == "0.6" ] ; then
     echo "Running Tuning v0.60 ..."
