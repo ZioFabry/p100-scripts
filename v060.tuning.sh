@@ -172,6 +172,8 @@ sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disa
 sed -i 's/init.sh \&/init.sh \> \/dev\/null \&/g' /etc/rc.local
 sed -i 's/\#\$nrconf{kernelhints} \= -1\;/\$nrconf{kernelhints} \= 0\;/g'  /etc/needrestart/needrestart.conf
  
+sed -i 's/type=/Type=/g' /lib/systemd/system/helium.service
+
 chmod -x /etc/systemd/system/*.timer
 chmod -x /etc/systemd/system/*.service
 
