@@ -36,6 +36,8 @@ cd /home/pi/api/tool/
 sudo bash /home/pi/api/tool/startAdvertise.sh > /home/pi/log/gateway_config_advertise.log &
 
 #init service
+set GW_ONBOARDING=ecc://i2c-0:96?slot=15
+set GW_KEYPAIR=ecc://i2c-0:96?slot=0
 systemctl start helium
 
 #init biomine watchdog
