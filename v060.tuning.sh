@@ -162,10 +162,13 @@ echo "Tuning timers..."
 /etc/biomine-scripts/adjust-timer.sh local-ip-check               3m  1h
 /etc/biomine-scripts/adjust-timer.sh sn-check                     4m  1h
 /etc/biomine-scripts/adjust-timer.sh external-ip-check            5m  1h
-/etc/biomine-scripts/adjust-timer.sh pubkeys-check                6m  1h
+/etc/biomine-scripts/adjust-timer.sh pubkeys-check                6m  5h
 
 
 echo "varius fix..."
+
+echo  echo "" > /var/dashboard/statuses/infoheight
+
 # disable recent_activity
 sed -i 's/recent_activity=\$(curl -s \$recent_activity_uri)/recent_activity=disabled/g' /etc/monitor-scripts/helium-statuses.sh
 
@@ -187,7 +190,11 @@ if [ -f /etc/init.d/zerotier-one ]; then
     echo "disinstall zerotier-one... done"
 fi
 
+curl -Lf "https://raw.githubusercontent.com/ZioFabry/Firmware-script-p100/v0.6.0fix/0.60/helium.service" -o "/lib/systemd/system/helium.service"
+
 systemctl daemon-reload
+systemctl enable helium.service
+systemctl start helium
 
 #echo "Forcing new scripts execution..."
 #bash /etc/monitor-scripts/pubkeys.sh
