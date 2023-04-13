@@ -59,3 +59,8 @@ if [ $RES -eq 1 ]; then
         reboot -f
     fi
 fi
+
+if ! systemctl is-active --quiet helium; then
+    echo "[$(date)] helium gateway service not running... try to restart"
+    systemctl start helium
+fi
