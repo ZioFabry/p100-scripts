@@ -17,7 +17,7 @@ systemctl daemon-reload
 
 VER=$(jq .version /home/pi/api/tool/version)
 
-if [ ! "$(jq .version /home/pi/api/tool/version)" == "0.6" ] || [ ! "$(</etc/lsb_release)" == "DISTRIB_RELEASE=gw_1.0.2" ]; then
+if [ ! "$(jq .version /home/pi/api/tool/version)" == "0.6" ] || [ ! "$(</etc/lsb_release)" == "DISTRIB_RELEASE=gw_1.1.0" ]; then
     echo "Running Upgrade $(jq .version /home/pi/api/tool/version) -> 0.60..."
     curl -Lfs https://raw.githubusercontent.com/ZioFabry/Firmware-script-p100/v0.6.0fix/0.60/EU/update.sh | sudo bash
     wait

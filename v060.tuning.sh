@@ -151,13 +151,13 @@ echo "Tuning timers..."
 /etc/biomine-scripts/adjust-timer.sh wifi-check                 230s 30s
 /etc/biomine-scripts/adjust-timer.sh password-check             250s 30s
 
-/etc/biomine-scripts/adjust-timer.sh bt-service-check           270s  1m
+/etc/biomine-scripts/adjust-timer.sh bt-service-check           280s  1m
 /etc/biomine-scripts/adjust-timer.sh miner-service-check        300s  1m
 /etc/biomine-scripts/adjust-timer.sh pf-service-check           320s  1m
 /etc/biomine-scripts/adjust-timer.sh wifi-service-check         340s  1m
 /etc/biomine-scripts/adjust-timer.sh wifi-config-check          360s  1m
 
-/etc/biomine-scripts/adjust-timer.sh helium-status-check         10m 30m 
+/etc/biomine-scripts/adjust-timer.sh helium-status-check         10m  6h
 
 /etc/biomine-scripts/adjust-timer.sh local-ip-check               3m  1h
 /etc/biomine-scripts/adjust-timer.sh sn-check                     4m  1h
